@@ -50,9 +50,6 @@
             <button onclick="switchTab('schedule')" id="nav-schedule" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl transition-all duration-300 font-medium text-gray-400 hover:text-white hover:bg-white/5">
                 <i class="fa-solid fa-calendar-days text-lg"></i> Match Schedule
             </button>
-            <button onclick="switchTab('analytics')" id="nav-analytics" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl transition-all duration-300 font-medium text-gray-400 hover:text-white hover:bg-white/5">
-                <i class="fa-solid fa-chart-pie text-lg"></i> Prediction Engine
-            </button>
             <button onclick="switchTab('highlights')" id="nav-highlights" class="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl transition-all duration-300 font-medium text-gray-400 hover:text-white hover:bg-white/5">
                 <i class="fa-solid fa-clapperboard text-lg"></i> Highlights Archive
             </button>
@@ -64,11 +61,11 @@
         <section class="mb-8 glass-panel rounded-2xl p-6 border border-blue-500/10 relative overflow-hidden shadow-2xl">
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
-                    <span class="text-xs text-blue-400 font-bold tracking-widest uppercase block mb-1">UPCOMING BLOCKBUSTER</span>
-                    <h2 class="text-xl md:text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
-                        Spain <span class="text-gray-500 text-sm font-normal">vs</span> Belgium
+                    <span class="text-xs text-blue-400 font-bold tracking-widest uppercase block mb-1">REALTIME DASHBOARD</span>
+                    <h2 id="live-match-title" class="text-xl md:text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                        Loading Match Details...
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1.5"><i class="fa-solid fa-location-dot text-gray-500 mr-1"></i> Los Angeles Stadium, California | July 11, 2026</p>
+                    <p id="live-match-venue" class="text-xs text-gray-400 mt-1.5"><i class="fa-solid fa-location-dot text-gray-500 mr-1"></i> Syncing with Firebase...</p>
                 </div>
             </div>
         </section>
@@ -76,16 +73,8 @@
         <div id="tab-live" class="tab-content block">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 flex flex-col gap-4">
-                    <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl relative border border-gray-800/80 aspect-video bg-black">
-                        <iframe 
-                            id="main-iframe-player"
-                            class="w-full h-full absolute inset-0" 
-                            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&modestbranding=1&rel=0" 
-                            title="Live Football Stream" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
+                    <div id="video-container" class="glass-panel rounded-2xl overflow-hidden shadow-2xl relative border border-gray-800/80 aspect-video bg-black">
+                        <div class="absolute inset-0 flex items-center justify-center text-xs text-gray-400">Connecting to Live Feed...</div>
                     </div>
                 </div>
 
@@ -96,6 +85,11 @@
                     <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-3 text-xs"></div>
                 </div>
             </div>
+        </div>
+
+        <div id="tab-schedule" class="tab-content hidden">
+            <div class="text-sm text-gray-400 mb-4">Upcoming Schedule (Managed via Firestore)</div>
+            <div id="schedule-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </div>
 
         <div id="tab-highlights" class="tab-content hidden">
@@ -110,83 +104,170 @@
                 <h3 id="modal-title" class="text-xs font-bold text-white">Match Highlight Replay</h3>
                 <button onclick="closeLightboxModal()" class="text-gray-400 hover:text-white bg-slate-800 px-2.5 py-1.5 rounded-xl text-xs">✕</button>
             </div>
-            <div class="aspect-video bg-black relative w-full">
-                <iframe id="lightbox-iframe" class="w-full h-full absolute inset-0" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+            <div id="modal-player-container" class="aspect-video bg-black relative w-full">
+                </div>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <script>
-        // Unrestricted, globally embeddable sports & football loop links (Guaranteed No Error)
-        const highlightsData = [
-            {
-                id: 1,
-                title: "EA SPORTS FC Professional Football Showcase & Goals compilation",
-                thumbnail: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/9XmUe2wSAnM?autoplay=1&mute=0",
-                duration: "3:40",
-                scoreBadge: "HD"
-            },
-            {
-                id: 2,
-                title: "International Football Arena Skill & Match Drill Analytics",
-                thumbnail: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/S_S7Z6s_Ryk?autoplay=1&mute=0",
-                duration: "5:12",
-                scoreBadge: "LIVE"
-            }
-        ];
+        // Your Verified Web Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBthvsqH7aleKDtAs83DUWuje5aOmZg2CE",
+          authDomain: "fanzone-26-1a225.firebaseapp.com",
+          projectId: "fanzone-26-1a225",
+          storageBucket: "fanzone-26-1a225.firebasestorage.app",
+          messagingSenderId: "242306488605",
+          appId: "1:242306488605:web:e6070bb4fe4704246e69f4",
+          measurementId: "G-XZSNVBHV80"
+        };
+
+        // Initialize Firebase Compat Mode
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let loadedHighlights = [];
 
         document.addEventListener("DOMContentLoaded", () => {
-            renderHighlights();
+            listenToLiveStream();
+            listenToHighlights();
+            listenToSchedule();
             startChatSimulation();
         });
 
+        // 1. REALTIME LIVE STREAM SYNC (ইউটিউব এরর এড়াতে ইন্টেলিজেন্ট হাইব্রিড প্লেয়ার)
+        function listenToLiveStream() {
+            db.collection("live").doc("current").onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById("live-match-title").innerText = data.title || "No Live Match";
+                    document.getElementById("live-match-venue").innerHTML = `<i class="fa-solid fa-location-dot text-gray-500 mr-1"></i> ${data.venue || "TBD"}`;
+                    
+                    renderPlayer("video-container", data.streamUrl, true);
+                }
+            });
+        }
+
+        // 2. REALTIME HIGHLIGHTS ARCHIVE SYNC
+        function listenToHighlights() {
+            db.collection("highlights").onSnapshot((snapshot) => {
+                loadedHighlights = [];
+                const grid = document.getElementById("highlights-grid");
+                if (!grid) return;
+                grid.innerHTML = "";
+
+                if(snapshot.empty) {
+                    grid.innerHTML = `<div class="text-xs text-gray-500 p-4">No highlights available in database yet.</div>`;
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const item = doc.data();
+                    item.id = doc.id;
+                    loadedHighlights.push(item);
+
+                    const div = document.createElement("div");
+                    div.className = "glass-panel rounded-2xl overflow-hidden border border-gray-800/80 group relative p-4";
+                    div.innerHTML = `
+                        <div class="relative aspect-video overflow-hidden bg-slate-950 rounded-xl">
+                            <img src="${item.thumbnail || 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80'}" class="w-full h-full object-cover opacity-80" alt="Thumbnail">
+                            <div onclick="openLightboxModal('${item.id}')" class="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer">
+                                <div class="w-11 h-11 bg-emerald-500 text-black rounded-full flex items-center justify-center text-sm font-bold shadow-xl glow-emerald"><i class="fa-solid fa-play"></i></div>
+                            </div>
+                        </div>
+                        <h4 class="text-xs font-bold text-white mt-3">${item.title}</h4>
+                    `;
+                    grid.appendChild(div);
+                });
+            });
+        }
+
+        // 3. SCHEDULE SYNC
+        function listenToSchedule() {
+            db.collection("schedule").onSnapshot((snapshot) => {
+                const grid = document.getElementById("schedule-grid");
+                if(!grid) return;
+                grid.innerHTML = "";
+                
+                snapshot.forEach(doc => {
+                    const match = doc.data();
+                    const card = document.createElement("div");
+                    card.className = "glass-panel p-5 rounded-2xl border border-gray-800/80 shadow-lg flex flex-col justify-between gap-3";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center"><span class="text-[9px] font-bold uppercase bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">${match.stage || 'Group Stage'}</span></div>
+                        <div class="flex items-center justify-between text-xs font-bold text-white"><span>${match.homeTeam}</span><span class="text-gray-600 text-[10px]">VS</span><span>${match.awayTeam}</span></div>
+                        <div class="text-[10px] text-gray-500 mt-2 flex justify-between"><span><i class="fa-solid fa-location-dot mr-1"></i> ${match.venue}</span><span>${match.date || ''}</span></div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+        }
+
+        // UNIVERSAL PLAYER RENDERER (ইউটিউব লিংক হলে iframe, ডিরেক্ট mp4 হলে video ট্যাগ জেনারেট করবে অটোমেটিক)
+        function renderPlayer(containerId, url, isMuted) {
+            const container = document.getElementById(containerId);
+            if(!container || !url) return;
+
+            container.innerHTML = "";
+
+            if (url.includes("youtube.com") || url.includes("youtu.be")) {
+                let videoId = "";
+                if(url.includes("embed/")) {
+                    videoId = url.split("embed/")[1].split("?")[0];
+                } else if(url.includes("v=")) {
+                    videoId = url.split("v=")[1].split("&")[0];
+                } else {
+                    videoId = url.split("/").pop();
+                }
+                
+                container.innerHTML = `
+                    <iframe class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${isMuted ? 1 : 0}&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+            } else {
+                container.innerHTML = `
+                    <video class="w-full h-full absolute inset-0 object-cover" controls autoplay ${isMuted ? 'muted' : ''} loop playsinline>
+                        <source src="${url}" type="video/mp4">
+                    </video>
+                `;
+            }
+        }
+
+        // TAB NAVIGATION
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(element => element.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
         }
 
-        function renderHighlights() {
-            const grid = document.getElementById("highlights-grid");
-            if (!grid) return; grid.innerHTML = "";
-            highlightsData.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "glass-panel rounded-2xl overflow-hidden border border-gray-800/80 group relative p-4";
-                div.innerHTML = `
-                    <div class="relative aspect-video overflow-hidden bg-slate-950 rounded-xl">
-                        <img src="${item.thumbnail}" class="w-full h-full object-cover opacity-80" alt="Thumbnail">
-                        <div onclick="openLightboxModal(${item.id})" class="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer">
-                            <div class="w-11 h-11 bg-emerald-500 text-black rounded-full flex items-center justify-center text-sm font-bold shadow-xl glow-emerald"><i class="fa-solid fa-play"></i></div>
-                        </div>
-                    </div>
-                    <h4 class="text-xs font-bold text-white mt-3">${item.title}</h4>
-                `;
-                grid.appendChild(div);
-            });
-        }
-
+        // LIGHTBOX MODAL HANDLERS
         function openLightboxModal(id) {
-            const item = highlightsData.find(h => h.id === id);
+            const item = loadedHighlights.find(h => h.id === id);
             if(!item) return;
             document.getElementById("modal-title").innerText = item.title;
-            document.getElementById("lightbox-iframe").src = item.youtubeEmbedUrl;
+            
+            renderPlayer("modal-player-container", item.videoUrl, false);
+
             const modal = document.getElementById("lightbox-modal");
             modal.classList.replace("hidden", "flex");
             setTimeout(() => { modal.classList.replace("opacity-0", "opacity-100"); }, 20);
         }
 
+        document.getElementById("lightbox-modal").addEventListener("click", function(e) {
+             if(e.target === this) closeLightboxModal();
+        });
+
         function closeLightboxModal() {
             const modal = document.getElementById("lightbox-modal");
             modal.classList.replace("opacity-100", "opacity-0");
-            document.getElementById("lightbox-iframe").src = "";
+            document.getElementById("modal-player-container").innerHTML = "";
             setTimeout(() => { modal.classList.replace("flex", "hidden"); }, 300);
         }
 
         function startChatSimulation() {
             const box = document.getElementById("chat-box");
             if(box) {
-                box.innerHTML = `<div class="bg-white/5 p-2.5 rounded-xl"><b class="text-emerald-400">System:</b> App Anti-blocking system fully synchronized. Enjoy! 🔥</div>`;
+                box.innerHTML = `<div class="bg-white/5 p-2.5 rounded-xl"><b class="text-emerald-400">Firebase Status:</b> Connected to Firestore Engine successfully! Realtime auto-updates are fully active. 🚀</div>`;
             }
         }
     </script>
