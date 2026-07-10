@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -112,7 +112,7 @@
                         Spain <span class="text-gray-500 text-sm font-normal">vs</span> Belgium
                         <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Quarter-Finals</span>
                     </h2>
-                    <p class="text-xs text-gray-400 mt-1.5"><i class="fa-solid fa-location-dot text-gray-500 mr-1"></i> Los Angeles Stadium, California | Local Time: July 10, 2026, 12:00 PM PDT</p>
+                    <p class="text-xs text-gray-400 mt-1.5"><i class="fa-solid fa-location-dot text-gray-500 mr-1"></i> Los Angeles Stadium, California | Local Time: July 11, 2026, 1:00 AM</p>
                 </div>
                 
                 <div class="flex items-center gap-3 bg-black/30 px-5 py-3 rounded-xl border border-gray-800/60 self-start lg:self-auto w-full sm:w-auto justify-center">
@@ -143,21 +143,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 flex flex-col gap-4">
                     <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl relative border border-gray-800/80 aspect-video group bg-black">
-                        <iframe 
-                            class="w-full h-full absolute inset-0 z-0" 
-                            src="https://www.youtube.com/embed/XnDs5rgXgFM?autoplay=0&mute=1&modestbranding=1&rel=0" 
-                            title="FIFA Tournament Highlights Player" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen>
-                        </iframe>
+                        <video 
+                            id="main-app-player"
+                            class="w-full h-full absolute inset-0 z-0 object-cover" 
+                            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
+                            autoplay 
+                            muted 
+                            loop 
+                            controls
+                            preload="auto">
+                        </video>
                         
                         <div class="absolute top-4 left-4 z-10 flex gap-2 pointer-events-none select-none">
                             <span class="bg-red-600 text-white text-[10px] font-black tracking-widest px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-md glow-red">
-                                <span class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span> REPLAY
+                                <span class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span> LIVE DEMO
                             </span>
                             <span class="bg-black/70 backdrop-blur-md text-gray-200 text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10">
-                                <i class="fa-solid fa-circle-play text-emerald-400 mr-1"></i> Broadcast VOD
+                                <i class="fa-solid fa-circle-play text-emerald-400 mr-1"></i> Public Feed
                             </span>
                         </div>
                         
@@ -189,14 +191,6 @@
                                     <div class="flex justify-between font-medium mb-1"><span class="text-gray-300">6</span><span class="text-gray-400">SHOTS ON TARGET</span><span class="text-gray-300">2</span></div>
                                     <div class="w-full h-2 bg-gray-800 rounded-full flex overflow-hidden"><div class="bg-blue-500 h-full" style="width: 75%"></div><div class="bg-amber-500 h-full" style="width: 25%"></div></div>
                                 </div>
-                                <div>
-                                    <div class="flex justify-between font-medium mb-1"><span class="text-gray-300">4</span><span class="text-gray-400">CORNER KICKS</span><span class="text-gray-300">5</span></div>
-                                    <div class="w-full h-2 bg-gray-800 rounded-full flex overflow-hidden"><div class="bg-blue-500 h-full" style="width: 44%"></div><div class="bg-amber-500 h-full" style="width: 56%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between font-medium mb-1"><span class="text-gray-300">11</span><span class="text-gray-400">FOULS COMMITTED</span><span class="text-gray-300">14</span></div>
-                                    <div class="w-full h-2 bg-gray-800 rounded-full flex overflow-hidden"><div class="bg-blue-500 h-full" style="width: 44%"></div><div class="bg-amber-500 h-full" style="width: 56%"></div></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -213,7 +207,7 @@
                                 <img src="https://ssl.gstatic.com/onebox/media/sports/logos/optimized/I3gt2Ew39ux3GGdZ-4JE3g_500x500.png" class="w-12 h-12 object-contain" alt="Morocco Logo">
                                 <div class="ml-2">
                                     <h3 class="text-base font-bold text-white tracking-tight">France vs Morocco</h3>
-                                    <p class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-trophy mr-1"></i> Quarter-Finals Complete</p>
+                                    <p class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-trophy mr-1"></i> Stage Round Complete</p>
                                 </div>
                             </div>
                             <div class="flex gap-2">
@@ -233,7 +227,7 @@
                         <span class="text-xs font-bold tracking-wider text-white uppercase flex items-center gap-2">
                             <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> LIVE SIMULATED CHAT
                         </span>
-                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-gray-400 font-semibold">SLOW MODE ON</span>
+                        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-gray-400 font-semibold">SLOW MODE</span>
                     </div>
 
                     <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs">
@@ -279,7 +273,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-sm font-bold tracking-wider uppercase text-white">WIN PROBABILITY MODEL ENGINE</h3>
-                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-bold tracking-widest">AI HYPERPARAMETER OPTIMIZED</span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-bold tracking-widest">AI OPTIMIZED</span>
                         </div>
 
                         <div class="flex items-center justify-between text-center mb-6 px-4">
@@ -335,17 +329,13 @@
                 <div class="glass-panel p-5 rounded-2xl border border-gray-800/80 shadow-2xl flex flex-col justify-between">
                     <div>
                         <h3 class="text-sm font-bold tracking-wider uppercase text-white mb-4"><i class="fa-solid fa-bolt text-amber-400 mr-1.5"></i> RECENT TOURNAMENT FORM</h3>
-                        
                         <div class="mb-5">
                             <p id="form-home-title" class="text-xs font-bold text-gray-300 mb-2"></p>
-                            <div id="form-home-badges" class="flex items-center gap-2">
-                                </div>
+                            <div id="form-home-badges" class="flex items-center gap-2"></div>
                         </div>
-
                         <div class="mb-5">
                             <p id="form-away-title" class="text-xs font-bold text-gray-300 mb-2"></p>
-                            <div id="form-away-badges" class="flex items-center gap-2">
-                                </div>
+                            <div id="form-away-badges" class="flex items-center gap-2"></div>
                         </div>
                     </div>
 
@@ -386,24 +376,23 @@
                 <button onclick="closeLightboxModal()" class="text-gray-400 hover:text-white bg-slate-800 hover:bg-slate-700 p-2 rounded-xl transition-all"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
             <div class="aspect-video bg-black relative w-full h-full">
-                <iframe 
-                    id="lightbox-iframe"
-                    class="w-full h-full absolute inset-0 z-10" 
+                <video 
+                    id="lightbox-video"
+                    class="w-full h-full absolute inset-0 z-10 object-cover" 
                     src="" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+                    autoplay 
+                    controls
+                    preload="auto">
+                </video>
             </div>
             <div class="p-4 bg-slate-950/60 flex justify-between items-center text-xs text-gray-400">
-                <span id="modal-meta-venue"><i class="fa-solid fa-location-dot text-gray-600 mr-1"></i> Venue Venue</span>
+                <span id="modal-meta-venue"><i class="fa-solid fa-location-dot text-gray-600 mr-1"></i> Venue</span>
                 <span id="modal-meta-duration" class="font-mono bg-white/5 px-2 py-0.5 rounded text-gray-300">0:00</span>
             </div>
         </div>
     </div>
 
     <script>
-        /* Tournament Database Matching Official Schedule & Video Archives */
         const matchesData = [
             {
                 id: 1,
@@ -414,7 +403,7 @@
                 stage: "quarter finals",
                 venue: "Los Angeles Stadium",
                 venueState: "California",
-                startTimeISO: "2026-07-11T01:00:00+06:00", // Scheduled Upcoming Match Block
+                startTimeISO: "2026-07-11T01:00:00+06:00",
                 probabilities: { home: 45, draw: 25, away: 30 },
                 h2h: { played: 8, homeWins: 4, awayWins: 2 },
                 form: { home: ["W", "W", "W", "D", "W"], away: ["W", "W", "L", "W", "W"] },
@@ -467,48 +456,40 @@
             }
         ];
 
+        // Swapped to open source unblocked direct raw media feeds
         const highlightsData = [
             {
                 id: 1,
-                title: "Spain vs Austria | Explosive 3-Goal Masterclass",
-                thumbnail: "https://ssl.gstatic.com/onebox/media/sports/videos/vita/VwaUz-mmzcgNOcSs_768x432.jpg",
-                embedUrl: "https://www.youtube.com/embed/ubfhxN5qCIE?autoplay=1",
-                duration: "03:15",
+                title: "Spain Fixture Highlights Reel | Cinematic Cut",
+                thumbnail: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                duration: "00:52",
                 scoreBadge: "3 - 0",
                 venue: "Los Angeles Stadium"
             },
             {
                 id: 2,
-                title: "Portugal vs Croatia | Round of 32 Drama Highlight",
-                thumbnail: "https://ssl.gstatic.com/onebox/media/sports/videos/vita/yrufEr3JmPxxm07Q_768x432.jpg",
-                embedUrl: "https://www.youtube.com/embed/vuA-lollxJ8?autoplay=1",
-                duration: "04:10",
+                title: "European Tactical Playstyle Review",
+                thumbnail: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80",
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+                duration: "00:40",
                 scoreBadge: "2 - 1",
-                venue: "Toronto Stadium"
+                venue: "Miami Stadium"
             },
             {
                 id: 3,
-                title: "Switzerland vs Algeria | Tactical Group Stage Review",
-                thumbnail: "https://ssl.gstatic.com/onebox/media/sports/videos/vita/mJCo0Ph2_wyUO_dg_768x432.jpg",
-                embedUrl: "https://www.youtube.com/embed/onDRxvtSh5c?autoplay=1",
-                duration: "02:45",
+                title: "Group Stage Operational Overview",
+                thumbnail: "https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&w=600&q=80",
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                duration: "00:15",
                 scoreBadge: "2 - 0",
-                venue: "BC Place Vancouver"
-            },
-            {
-                id: 4,
-                title: "France vs Morocco | Premium Heavyweight Clashing",
-                thumbnail: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
-                embedUrl: "https://www.youtube.com/embed/XnDs5rgXgFM?autoplay=1",
-                duration: "05:20",
-                scoreBadge: "2 - 0",
-                venue: "Boston Stadium"
+                venue: "Kansas City Stadium"
             }
         ];
 
         const chatSimulationPool = [
-            { user: "NeymarFan99", message: "What a strike from Mbappe earlier! Unstoppable 🔥", badge: "Premium" },
-            { user: "TacticalGaffer", message: "Morocco's low block was solid but transit speeds caught up to them.", badge: "Analyst" },
+            { user: "NeymarFan99", message: "What a strike earlier! Unstoppable 🔥", badge: "Premium" },
+            { user: "TacticalGaffer", message: "The low block was solid but transit speeds caught up to them.", badge: "Analyst" },
             { user: "LinekerSpecs", message: "Spain vs Belgium tomorrow is the match of the tournament on paper.", badge: "Premium" },
             { user: "GriezmannGlide", message: "Is extra time active or directly into penalty parameters?", badge: "User" },
             { user: "WorldCupGuru", message: "This dashboard timezone mapping automation is clutch.", badge: "Premium" }
@@ -516,7 +497,6 @@
 
         let currentScheduleFilter = "all";
 
-        /* LIFECYCLE INITIALIZER ON DOM READY */
         document.addEventListener("DOMContentLoaded", () => {
             initializeCountdown();
             renderSchedule();
@@ -526,7 +506,6 @@
             startLiveChatSimulation();
         });
 
-        /* TAB NAVIGATION TOGGLE STATES MANAGER */
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(element => element.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
@@ -548,7 +527,6 @@
             }
         }
 
-        /* TOGGLEABLE VIDEO OVERLAY GRAPHIC PANEL LAYER */
         function toggleStatsOverlay() {
             const overlay = document.getElementById("stats-overlay");
             if (overlay.classList.contains("translate-x-full")) {
@@ -560,7 +538,6 @@
             }
         }
 
-        /* TICKING REALTIME COUNTDOWN MODULE LAYER TIMER ENGINE */
         function initializeCountdown() {
             const targetDate = new Date(matchesData[0].startTimeISO).getTime();
 
@@ -591,7 +568,6 @@
             setInterval(updateTimer, 1000);
         }
 
-        /* AUTO CONVERSION METRICS TIMEZONE INTERPRETER MODULE LAYER */
         function formatToLocalTimezone(isoString) {
             const matchDate = new Date(isoString);
             const optionsDate = { month: 'short', day: 'numeric', year: 'numeric' };
@@ -607,7 +583,6 @@
             return `${localizedDate} at ${localizedTime} (${timezoneAbbreviation})`;
         }
 
-        /* MATCH SCHEDULE RENDERING ENGINE (WITH SEARCH + ROUND FILTERS) */
         function filterSchedule(stageType, element) {
             currentScheduleFilter = stageType;
             document.querySelectorAll('.schedule-filter-btn').forEach(btn => {
@@ -631,7 +606,7 @@
             });
 
             if(filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full glass-panel p-8 text-center text-xs text-gray-400 rounded-xl border border-gray-800">No matching fixtures found for parameters.</div>`;
+                grid.innerHTML = `<div class="col-span-full glass-panel p-8 text-center text-xs text-gray-400 rounded-xl border border-gray-800">No matching fixtures found.</div>`;
                 return;
             }
 
@@ -669,7 +644,6 @@
             });
         }
 
-        /* DYNAMIC WIN PROBABILITY PREDICTION ENGINE HOOKS CONTROLLER */
         function populateAnalyticsDropdown() {
             const selector = document.getElementById("analytics-selector");
             selector.innerHTML = "";
@@ -722,7 +696,6 @@
             document.getElementById("predictive-log").innerText = match.logMessage;
         }
 
-        /* NETFLIX-STYLE VIDEO HIGHLIGHTS MAP ARCHIVE MODULE LAYER RENDERS */
         function renderHighlights() {
             const grid = document.getElementById("highlights-grid");
             grid.innerHTML = "";
@@ -753,17 +726,21 @@
             });
         }
 
-        /* LIGHTBOX DIALOG ENGINE */
         function openLightboxModal(highlightId) {
             const item = highlightsData.find(h => h.id === highlightId);
             if(!item) return;
+
+            // Pause main feed when lightbox opens
+            const mainPlayer = document.getElementById("main-app-player");
+            if (mainPlayer) mainPlayer.pause();
 
             document.getElementById("modal-title").innerText = item.title;
             document.getElementById("modal-meta-venue").innerHTML = `<i class="fa-solid fa-location-dot text-gray-600 mr-1"></i> ${item.venue}`;
             document.getElementById("modal-meta-duration").innerText = `LENGTH: ${item.duration}`;
             
-            // Inject video URL directly into modal player frame
-            document.getElementById("lightbox-iframe").src = item.embedUrl;
+            const videoElement = document.getElementById("lightbox-video");
+            videoElement.src = item.videoUrl;
+            videoElement.load();
 
             const modal = document.getElementById("lightbox-modal");
             modal.classList.remove("hidden");
@@ -784,15 +761,21 @@
             modal.querySelector(".transform").classList.remove("scale-100");
             modal.querySelector(".transform").classList.add("scale-95");
             
+            // Terminate background audio stream instances on close
+            const videoElement = document.getElementById("lightbox-video");
+            videoElement.pause();
+            videoElement.src = "";
+
             setTimeout(() => {
                 modal.classList.remove("flex");
                 modal.classList.add("hidden");
-                // Reset frame to terminate streaming background processes completely on hide
-                document.getElementById("lightbox-iframe").src = "";
+                
+                // Resume main live background preview feed loop automatically
+                const mainPlayer = document.getElementById("main-app-player");
+                if (mainPlayer) mainPlayer.play().catch(()=>{});
             }, 300);
         }
 
-        /* LIVE CHAT INTERACTIVE QUEUE MODULE ENGINE */
         function addChatMessage(user, message, badgeType) {
             const chatBox = document.getElementById("chat-box");
             const messageElement = document.createElement("div");
