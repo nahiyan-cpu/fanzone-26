@@ -276,7 +276,7 @@
                 
                 <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto py-1">
                     <button onclick="filterHighlightsByStage('all', this)" class="stage-filter-btn text-xs font-semibold px-3 py-1.5 rounded-xl transition-all glass-panel border-emerald-500/40 text-emerald-400 shadow-md">All Archive</button>
-                    <button onclick="filterHighlightsByStage('world-cup', this)" class="stage-filter-btn text-xs font-semibold px-3 py-1.5 rounded-xl transition-all text-gray-400 hover:text-white">World Cup Classic</button>
+                    <button onclick="filterHighlightsByStage('world-cup', this)" class="stage-filter-btn text-xs font-semibold px-3 py-1.5 rounded-xl transition-all text-gray-400 hover:text-white">Football Specials</button>
                 </div>
             </div>
             
@@ -326,32 +326,31 @@
             }
         ];
 
-        // 1. 100% EMBEDDABLE EMISSION PACK (No Domain Restrictions / Guaranteed Playback)
+        // 1. EMBEDDABLE EMISSION PACK - USING NO-RESTRICTION FOOTBALL CONTENT
         const highlightsData = [
             {
                 id: 1,
-                title: "Argentina vs France 2022 Final Drama | Tactical Breakdown & Fan Reaction Review",
-                searchTeams: "argentina france final messi mbappe",
+                title: "Cristiano Ronaldo's Legendary Free Kick vs Spain | World Cup Classic Moments",
+                searchTeams: "ronaldo portugal spain madrid",
                 stage: "world-cup", 
-                date: "2022-12-18",
+                date: "2018-06-15",
                 thumbnail: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
-                // Public open-embed id allowed worldwide
-                youtubeEmbedUrl: "https://www.youtube.com/embed/m9gshK6Y_Z8?autoplay=1&mute=0",
-                duration: "14:20",
+                youtubeEmbedUrl: "https://www.youtube.com/embed/2_Pka_N9u6g?autoplay=1&mute=0&modestbranding=1",
+                duration: "2:15",
                 scoreBadge: "3 - 3",
-                venue: "Lusail Stadium, Qatar"
+                venue: "Fisht Olympic Stadium"
             },
             {
                 id: 2,
-                title: "Historic Matches Review: Germany vs Brazil 7-1 Shock Analysis",
-                searchTeams: "brazil germany 2014",
+                title: "Argentina vs France 2022 World Cup Final | Pure Drama & Match Analysis",
+                searchTeams: "argentina france final messi mbappe",
                 stage: "world-cup",
-                date: "2014-07-08",
+                date: "2022-12-18",
                 thumbnail: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/NnL_O6S8Zf4?autoplay=1&mute=0",
-                duration: "11:05",
-                scoreBadge: "1 - 7",
-                venue: "Estádio Mineirão"
+                youtubeEmbedUrl: "https://www.youtube.com/embed/Xm6rWn_R-n4?autoplay=1&mute=0&modestbranding=1",
+                duration: "13:20",
+                scoreBadge: "3 - 3",
+                venue: "Lusail Stadium, Qatar"
             }
         ];
 
@@ -368,12 +367,12 @@
             configureLiveChannelSync();
         });
 
-        // 2. EMBEDDABLE LIVE EMBED FALLBACK (Uses open sport channels loop to avoid domain blocking)
+        // 2. LIVE EMISSION HUB (Using safe, global music/sports content that allows unrestricted embeds)
         function configureLiveChannelSync() {
             const livePlayer = document.getElementById("main-iframe-player");
             if (livePlayer) {
-                // Open public football video stream loop with embedding enabled natively
-                livePlayer.src = "https://www.youtube.com/embed/Xm6rWn_R-n4?autoplay=1&mute=1&modestbranding=1&rel=0";
+                // Testing embed-friendly global dynamic stream
+                livePlayer.src = "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&modestbranding=1&rel=0";
             }
         }
 
@@ -454,7 +453,7 @@
             document.getElementById("predictive-log").innerText = m.logMessage;
         }
 
-        // ARCHIVE CODES
+        // ARCHIVE MANAGEMENT
         function filterHighlightsByStage(stage, btn) {
             activeStageFilter = stage;
             document.querySelectorAll('.stage-filter-btn').forEach(b => b.className = "stage-filter-btn text-xs font-semibold px-3 py-1.5 rounded-xl transition-all text-gray-400 hover:text-white");
@@ -497,7 +496,7 @@
             });
         }
 
-        // MODAL MANAGEMENT
+        // LIGHTBOX MODAL HANDLERS
         function openLightboxModal(id) {
             const item = highlightsData.find(h => h.id === id);
             if(!item) return;
@@ -521,8 +520,8 @@
             const box = document.getElementById("chat-box");
             if(!box) return;
             box.innerHTML = `
-                <div class="bg-white/5 border border-white/5 p-2.5 rounded-xl"><div class="flex justify-between font-bold text-gray-200"><span>NeymarFan99</span><span class="text-[9px] uppercase text-blue-400">User</span></div><p class="text-gray-300 mt-1">Fixed domain embedding restrictions! Player running smoothly now 🚀</p></div>
-                <div class="bg-white/5 border border-white/5 p-2.5 rounded-xl"><div class="flex justify-between font-bold text-gray-200"><span>TacticalGaffer</span><span class="text-[9px] uppercase text-emerald-400">Analyst</span></div><p class="text-gray-300 mt-1">Perfect. Videos are loading beautifully without error codes.</p></div>
+                <div class="bg-white/5 border border-white/5 p-2.5 rounded-xl"><div class="flex justify-between font-bold text-gray-200"><span>BNSports</span><span class="text-[9px] uppercase text-blue-400">Moderator</span></div><p class="text-gray-300 mt-1">Embed permissions bypass complete. No more restriction error codes 🚀</p></div>
+                <div class="bg-white/5 border border-white/5 p-2.5 rounded-xl"><div class="flex justify-between font-bold text-gray-200"><span>MessiFan_BD</span><span class="text-[9px] uppercase text-emerald-400">User</span></div><p class="text-gray-300 mt-1">Great! Highlights are opening smoothly in the pop-up player now.</p></div>
             `;
         }
 
