@@ -151,11 +151,11 @@
                 <div class="lg:col-span-2 flex flex-col gap-4">
                     <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl relative border border-gray-800/80 aspect-video group bg-black">
                         
-                        <!-- UNBLOCKED EMBEDDED PLAYER -->
+                        <!-- UNBLOCKED EMBEDDED PLAYER WITH AUTOPLAY & SOUND ENABLED -->
                         <iframe 
                             id="main-iframe-player"
                             class="w-full h-full absolute inset-0 z-0" 
-                            src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=1&modestbranding=1&rel=0&loop=1&playlist=9bZkp7q19f0" 
+                            src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=0&modestbranding=1&rel=0&loop=1&playlist=9bZkp7q19f0" 
                             title="Open Source Sports Demo Player" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -302,6 +302,18 @@
 
         <!-- ==================== TAB 4: ARCHIVE MATCH HIGHLIGHTS ==================== -->
         <div id="tab-highlights" class="tab-content hidden">
+            <!-- DYNAMIC SEARCH BAR FOR ARCHIVE -->
+            <div class="glass-panel p-4 rounded-2xl border border-gray-800/80 mb-6 flex gap-4 justify-between items-center shadow-xl">
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                    <input id="highlights-search" oninput="filterHighlights()" type="text" placeholder="Search highlights (e.g., Brazil, Spain)..." class="w-full bg-slate-900/90 border border-gray-800 focus:border-emerald-500/50 focus:outline-none rounded-xl pl-9 pr-4 py-2 text-xs text-gray-200">
+                </div>
+                <div class="text-xs text-gray-400 font-medium">
+                    Available Videos: <span id="video-count" class="text-emerald-400 font-bold">3</span>
+                </div>
+            </div>
+            
+            <!-- GRID LAYOUT -->
             <div id="highlights-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
@@ -378,31 +390,31 @@
             }
         ];
 
-        // Highlight videos converted to fully embeddable open-source YouTube IDs
+        // DYNAMIC HIGHLIGHTS POOL WITH BRAZIL VS JAPAN MATCH
         const highlightsData = [
             {
                 id: 1,
-                title: "Spain Fixture Highlights Reel | Tactical Play",
+                title: "Brazil vs Japan 4-1 | Extended Premium Match Highlights",
+                thumbnail: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80",
+                youtubeEmbedUrl: "https://www.youtube.com/embed/SgZ1mG_v-f8?autoplay=1&mute=0&modestbranding=1", // Unmuted YouTube Stream
+                duration: "4:20",
+                scoreBadge: "4 - 1",
+                venue: "Miami Corporate Stadium"
+            },
+            {
+                id: 2,
+                title: "Spain Fixture Highlights Reel | Tactical Play Showcase",
                 thumbnail: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&modestbranding=1",
+                youtubeEmbedUrl: "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=0&modestbranding=1",
                 duration: "2:15",
                 scoreBadge: "3 - 0",
                 venue: "Los Angeles Stadium"
             },
             {
-                id: 2,
-                title: "European Strategy Review & Goals Archive",
-                thumbnail: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&modestbranding=1",
-                duration: "1:45",
-                scoreBadge: "2 - 1",
-                venue: "Miami Stadium"
-            },
-            {
                 id: 3,
-                title: "Group Stage Tournament Wrapup",
+                title: "Group Stage Best Goals & Tournament Wrapup",
                 thumbnail: "https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&w=600&q=80",
-                youtubeEmbedUrl: "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&modestbranding=1",
+                youtubeEmbedUrl: "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=0&modestbranding=1",
                 duration: "3:10",
                 scoreBadge: "2 - 0",
                 venue: "Kansas City Stadium"
@@ -517,10 +529,21 @@
             document.getElementById("predictive-log").innerText = match.logMessage;
         }
 
-        function renderHighlights() {
+        // HIGHLIGHTS RENDER AND FILTER COMPONENT
+        function renderHighlights(filteredData = highlightsData) {
             const grid = document.getElementById("highlights-grid");
             grid.innerHTML = "";
-            highlightsData.forEach(item => {
+            
+            if(document.getElementById("video-count")) {
+                document.getElementById("video-count").innerText = filteredData.length;
+            }
+
+            if(filteredData.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-xs text-gray-500"><i class="fa-solid fa-video-slash text-xl mb-2 block text-gray-600"></i> No match archives found. Try another query!</div>`;
+                return;
+            }
+
+            filteredData.forEach(item => {
                 const card = document.createElement("div");
                 card.className = "glass-panel rounded-2xl overflow-hidden border border-gray-800/80 hover:border-emerald-500/30 shadow-lg group relative flex flex-col justify-between transition-all duration-300";
                 card.innerHTML = `
@@ -531,21 +554,31 @@
                                 <i class="fa-solid fa-play"></i>
                             </div>
                         </div>
+                        <span class="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm text-[10px] text-white font-mono px-1.5 py-0.5 rounded border border-white/10">${item.duration}</span>
+                        <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-black px-2 py-0.5 rounded shadow-md">${item.scoreBadge}</span>
                     </div>
                     <div class="p-4">
-                        <h4 class="text-xs font-bold text-white tracking-tight line-clamp-1">${item.title}</h4>
-                        <p class="text-[10px] text-gray-500 mt-1"><i class="fa-solid fa-location-dot mr-1"></i> ${item.venue}</p>
+                        <h4 class="text-xs font-bold text-white tracking-tight line-clamp-2 min-h-[32px]">${item.title}</h4>
+                        <p class="text-[10px] text-gray-500 mt-1.5 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> ${item.venue}</p>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
+        function filterHighlights() {
+            const query = document.getElementById("highlights-search").value.toLowerCase();
+            const filtered = highlightsData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.venue.toLowerCase().includes(query)
+            );
+            renderHighlights(filtered);
+        }
+
         function openLightboxModal(highlightId) {
             const item = highlightsData.find(h => h.id === highlightId);
             if(!item) return;
 
-            // Mute or reset background live player to optimize performance
             const mainPlayer = document.getElementById("main-iframe-player");
             if (mainPlayer) mainPlayer.src = mainPlayer.src.replace("autoplay=1", "autoplay=0");
 
@@ -577,11 +610,11 @@
 
             setTimeout(() => {
                 modal.classList.remove("flex");
+                modal.hidden = true;
                 modal.classList.add("hidden");
                 
-                // Restore main feed autoplay feature
                 const mainPlayer = document.getElementById("main-iframe-player");
-                if (mainPlayer) mainPlayer.src = "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=1&modestbranding=1&rel=0&loop=1&playlist=9bZkp7q19f0";
+                if (mainPlayer) mainPlayer.src = "https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=0&modestbranding=1&rel=0&loop=1&playlist=9bZkp7q19f0";
             }, 300);
         }
 
